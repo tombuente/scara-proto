@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option go_package = "github.com/tombuente/scara-proto";
+
+package scaraproto;
+
+
+message ExecCommandRequest {
+    string command = 1;
+}
+
+message ExecCommandResponse {
+    string response = 1;
+}
+
+service Robot {
+    rpc ExecCommand (ExecCommandRequest) returns (ExecCommandResponse) {}
+}
