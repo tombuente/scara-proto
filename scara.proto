@@ -4,15 +4,28 @@ option go_package = "github.com/tombuente/scara-proto";
 
 package scaraproto;
 
+message Empty {}
+
+service Robot {
+    rpc ExecCommand (ExecCommandRequest) returns (ExecCommandResponse) {}
+    rpc QueueUpdates (Empty) returns (stream CommandInfo) {}
+}
+
+enum OperationState {
+    QUEUED = 0;
+    PROCESSING = 1;
+    DONE = 2;
+}
 
 message ExecCommandRequest {
     string command = 1;
 }
 
 message ExecCommandResponse {
-    string response = 1;
+    int64 id = 1;
 }
 
-service Robot {
-    rpc ExecCommand (ExecCommandRequest) returns (ExecCommandResponse) {}
+message CommandInfo {
+    int64 id = 1;
+    OperationState state = 2;
 }
