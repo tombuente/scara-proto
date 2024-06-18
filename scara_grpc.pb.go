@@ -18,86 +18,86 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// RobotClient is the client API for Robot service.
+// ScaraClient is the client API for Scara service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type RobotClient interface {
+type ScaraClient interface {
 	UploadProgram(ctx context.Context, in *UploadProgramRequest, opts ...grpc.CallOption) (*Empty, error)
 }
 
-type robotClient struct {
+type scaraClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewRobotClient(cc grpc.ClientConnInterface) RobotClient {
-	return &robotClient{cc}
+func NewScaraClient(cc grpc.ClientConnInterface) ScaraClient {
+	return &scaraClient{cc}
 }
 
-func (c *robotClient) UploadProgram(ctx context.Context, in *UploadProgramRequest, opts ...grpc.CallOption) (*Empty, error) {
+func (c *scaraClient) UploadProgram(ctx context.Context, in *UploadProgramRequest, opts ...grpc.CallOption) (*Empty, error) {
 	out := new(Empty)
-	err := c.cc.Invoke(ctx, "/scaraproto.Robot/UploadProgram", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/scaraproto.Scara/UploadProgram", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// RobotServer is the server API for Robot service.
-// All implementations must embed UnimplementedRobotServer
+// ScaraServer is the server API for Scara service.
+// All implementations must embed UnimplementedScaraServer
 // for forward compatibility
-type RobotServer interface {
+type ScaraServer interface {
 	UploadProgram(context.Context, *UploadProgramRequest) (*Empty, error)
-	mustEmbedUnimplementedRobotServer()
+	mustEmbedUnimplementedScaraServer()
 }
 
-// UnimplementedRobotServer must be embedded to have forward compatible implementations.
-type UnimplementedRobotServer struct {
+// UnimplementedScaraServer must be embedded to have forward compatible implementations.
+type UnimplementedScaraServer struct {
 }
 
-func (UnimplementedRobotServer) UploadProgram(context.Context, *UploadProgramRequest) (*Empty, error) {
+func (UnimplementedScaraServer) UploadProgram(context.Context, *UploadProgramRequest) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UploadProgram not implemented")
 }
-func (UnimplementedRobotServer) mustEmbedUnimplementedRobotServer() {}
+func (UnimplementedScaraServer) mustEmbedUnimplementedScaraServer() {}
 
-// UnsafeRobotServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to RobotServer will
+// UnsafeScaraServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ScaraServer will
 // result in compilation errors.
-type UnsafeRobotServer interface {
-	mustEmbedUnimplementedRobotServer()
+type UnsafeScaraServer interface {
+	mustEmbedUnimplementedScaraServer()
 }
 
-func RegisterRobotServer(s grpc.ServiceRegistrar, srv RobotServer) {
-	s.RegisterService(&Robot_ServiceDesc, srv)
+func RegisterScaraServer(s grpc.ServiceRegistrar, srv ScaraServer) {
+	s.RegisterService(&Scara_ServiceDesc, srv)
 }
 
-func _Robot_UploadProgram_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Scara_UploadProgram_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UploadProgramRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RobotServer).UploadProgram(ctx, in)
+		return srv.(ScaraServer).UploadProgram(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/scaraproto.Robot/UploadProgram",
+		FullMethod: "/scaraproto.Scara/UploadProgram",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RobotServer).UploadProgram(ctx, req.(*UploadProgramRequest))
+		return srv.(ScaraServer).UploadProgram(ctx, req.(*UploadProgramRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Robot_ServiceDesc is the grpc.ServiceDesc for Robot service.
+// Scara_ServiceDesc is the grpc.ServiceDesc for Scara service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Robot_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "scaraproto.Robot",
-	HandlerType: (*RobotServer)(nil),
+var Scara_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "scaraproto.Scara",
+	HandlerType: (*ScaraServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "UploadProgram",
-			Handler:    _Robot_UploadProgram_Handler,
+			Handler:    _Scara_UploadProgram_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
