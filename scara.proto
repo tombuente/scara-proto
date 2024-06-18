@@ -4,7 +4,7 @@ option go_package = "github.com/tombuente/scara-proto";
 
 package scaraproto;
 
-service Robot {
+service Scara {
     rpc UploadProgram (UploadProgramRequest) returns (Empty) {}
 }
 
