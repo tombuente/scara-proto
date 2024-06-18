@@ -10,12 +10,6 @@ service Robot {
 
 message Empty {}
 
-enum OperationState {
-    QUEUED = 0;
-    PROCESSING = 1;
-    DONE = 2;
-}
-
 message UploadProgramRequest {
-    string command = 1;
+    string program = 1;
 }
